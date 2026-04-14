@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MOS ASPHALT</title>
+  <meta name="description" content="MOS ASPHALT - ճանապարհաշինություն Հայաստանում. Ասֆալտապատում, ճանապարհների կառուցում, տեխնիկայի վարձակալություն."/>
+  <link rel="icon" href="assets/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ffd33d',
+            background: '#0a0a0a',
+            foreground: '#ffffff',
+            neutral: {
+                900: '#121212',
+            }
+          },
+          fontFamily: {
+            sans: ['Noto Sans Armenian', 'sans-serif'],
+            heading: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'marquee': 'marquee 25s linear infinite',
+            'scroll': 'scroll 30s linear infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: 0, transform: 'translateY(30px)', filter: 'blur(10px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' }
+            },
+            scroll: {
+              'to': { transform: 'translateX(calc(-50% - 12px))' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root{ --primary:#ffd33d; --bg:#0a0a0a; --fg:#fff; --bg-light:#141414; --surface: rgba(255,255,255,.05); --surface-2: rgba(255,255,255,.08); --shadow: 0 6px 20px rgba(0,0,0,.25); --radius:12px; --space-1:8px; --space-2:12px; --space-3:16px; --space-4:24px; --space-5:32px; --font-heading: Inter, ui-sans-serif, system-ui; --font-body: 'Noto Sans Armenian', sans-serif; }
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:'Noto Sans Armenian', sans-serif; background:var(--bg); color:var(--fg); overflow-x:hidden; hyphens: auto; }
+
+    @media (max-width: 640px) {
+        .section-title { font-size: 1.1rem !important; word-break: break-all !important; }
+        /* Smaller titles */
+        #services .mb-16 h2, #comparison h2 { font-size: 1.25rem !important; }
+        [data-i18n="srv_asphalt_title"] { font-size: 1.25rem !important; }
+        
+        .footer-grid { grid-template-columns: 1fr !important; text-align: center; }
+        .footer-col { display: flex; flex-direction: column; align-items: center; }
+        nav { font-size: 0.7rem !important; gap: 6px !important; }
+        header { padding: 0 5px !important; padding-right: 40px !important; }
+        .logo-area { gap: 4px !important; }
+        .logo-area img { height: 30px !important; }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar{ width: 6px; }
+    ::-webkit-scrollbar-track{ background: rgba(0,0,0,.1); }
+    ::-webkit-scrollbar-thumb{ background: rgba(255,211,61,.3); border-radius: 4px; transition: background .3s ease; }
+    ::-webkit-scrollbar-thumb:hover{ background: var(--primary); }
+    *{ scrollbar-width: thin; scrollbar-color: rgba(255,211,61,.3) rgba(0,0,0,.1); }
+
+    /* Blur Fade Up animation classes */
+    .blur-fade-up {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                    filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blur-fade-up.visible {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+    }
+
+    /* Buttons / Controls */
+    .ctrl-btn{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); color:#fff; border-radius:10px; padding:8px 16px; cursor:pointer; font-weight:600; font-size:13px; transition:all .3s ease; backdrop-filter: blur(4px); }
+    .ctrl-btn:hover{ background:rgba(255,255,255,.12); border-color:var(--primary); color:var(--primary); box-shadow: 0 4px 12px rgba(255,209,0,.15); }
+    .ctrl-btn.active{ background:var(--primary); color:#000; border-color:var(--primary); box-shadow: 0 4px 12px rgba(255,209,0,.25); }
+    
+    body.light .ctrl-btn{ background:rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.1); color:#000; }
+    body.light .ctrl-btn:hover{ background:rgba(0,0,0,.1); border-color:var(--primary); color:var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    body.light .ctrl-btn.active{ background:var(--primary); color:#000; border-color:var(--primary); }
+    
+    body.light .ctrl-btn{ background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.1); color:#333; }
+    body.light .ctrl-btn:hover{ background:rgba(0,0,0,.1); border-color:var(--primary); color:var(--primary); }
+    body.light .ctrl-btn.active{ background:var(--primary); color:#000; border-color:var(--primary); }
+    
+    /* Contact Form Styling */
+    .form-group input, .form-group textarea { width: 100%; padding: 14px 18px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; color: #fff; font-size: 15px; outline: none; transition: all .3s ease; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); background: rgba(255,255,255,.07); box-shadow: 0 0 0 2px rgba(255,209,0,.15); }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #aaa; }
+    .form-group button { width: 100%; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all .3s ease; }
+    .hamburger{ display:none; background:none; border:none; color:#fff; font-size:24px; cursor:pointer; }
+    .mobile-menu{ position:fixed; top:72px; left:0; right:0; background:rgba(10,10,10,.98); padding:20px; display:none; flex-direction:column; gap:12px; z-index:49; border-bottom:1px solid rgba(255,159,0,.15); }
+    .mobile-menu.open{ display:flex; }
+    .mobile-menu a{ color:#ccc; text-decoration:none; font-weight:700; padding:8px 0; }
+    @media(max-width:768px){ .hamburger{ display:inline-flex; } nav { display: none !important; } .logo-area span{ display: none; } }
+    @media(min-width:769px){ .mobile-menu{ display:none; } nav{ display:flex; } }
+
+    /* Header */
+    header{ position:fixed; top:0; left:0; right:0; height:72px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:rgba(8,8,8,.75); backdrop-filter: blur(8px) saturate(1.25); -webkit-backdrop-filter: blur(8px) saturate(1.25); z-index:50; border-bottom:1px solid rgba(255,159,0,.35); transition:background .3s; box-shadow:0 8px 28px rgba(0,0,0,.35); }
+    @media(max-width: 375px) { header { padding: 0 12px; } .controls { gap: 4px; } }
+    header.scrolled{ background:rgba(10,10,10,.95); }
+    .logo-area{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo-area img{ height:42px; }
+    nav{ display:flex; gap:24px; align-items:center; }
+    nav a{ color:#ccc; text-decoration:none; font-weight:700; font-size:14px; }
+    nav a::after{ content:''; display:block; height:2px; background:var(--primary); width:0; transition:width .3s; }
+    nav a.active{ color: var(--primary); }
+    nav a.active::after{ width: 100%; }
+    .controls{ display:flex; gap:10px; align-items:center; }
+
+    /* Hero */
+    #hero{ position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+    #hero video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: saturate(1.1); }
+    #hero .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.3) 0, rgba(0,0,0,.2) 50%, rgba(0,0,0,.5) 100%); }
+    #hero .content{ position:relative; z-index:2; padding:0 16px; }
+    #hero h1{ font-size:clamp(2.5rem,7vw,6rem); font-weight:900; text-transform:uppercase; line-height:1.0; background: linear-gradient(90deg, #ffd56a 0%, #ffd400 50%, #ffd56a 100%); -webkit-background-clip:text; background-clip:text; color:transparent; background-size:200% 100%; animation: hue 8s linear infinite; }
+    #hero h1 .accent{ color:inherit; }
+    @keyframes hue { to { background-position: 200% 0; } }
+    #hero p{ font-size:1.1rem; color:#ddd; margin:12px auto 28px; max-width:680px; }
+    .hero-actions{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .btn{ border-radius:999px; padding:12px 28px; font-weight:700; border:0; cursor:pointer; font-size:15px; display:inline-flex; align-items:center; gap:8px; text-decoration:none; }
+    .btn.primary{ background:var(--primary); color:#000; }
+    .btn.outline{ background:transparent; color:#fff; border:2px solid rgba(255,255,255,.5); }
+    .btn.primary:hover{ box-shadow: 0 12px 40px rgba(255,209,0,.6); transform: translateY(-1px); }
+
+    /* Sections */
+    section{ padding:80px 16px; }
+    .section-container{ max-width:1100px; margin:0 auto; }
+    .section-title{ font-family: var(--font-heading); font-size:clamp(1.8rem,4vw,2.5rem); font-weight:900; margin-bottom:6px; position:relative; display:inline-block; }
+    .section-title::after{ content:''; display:block; width:60px; height:4px; background: linear-gradient(90deg, var(--primary), #ffd966, var(--primary)); margin-top:8px; border-radius:2px; }
+    .section-subtitle{ color:#999; font-size:1.05rem; margin-bottom:40px; }
+    /* Reveal and animations */
+    .reveal{ opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease; }
+    .section-container.reveal{ background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 48px; padding-top: 56px; padding-bottom: 56px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+    .reveal.visible{ opacity:1; transform:translateY(0); }
+    .delay-1{ transition-delay:.1s; }
+    .delay-2{ transition-delay:.2s; }
+    .delay-3{ transition-delay:.3s; }
+    .delay-4{ transition-delay:.4s; }
+    .delay-5{ transition-delay:.5s; }
+    
+    /* Text Reveal */
+    .word-reveal span { opacity: 0.2; transition: opacity 0.5s ease; }
+    .word-reveal.visible span { opacity: 1; }
+    
+
+    /* Cards - premium restrained */
+    .card{ background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding:28px; backdrop-filter: saturate(1.05) blur(6px); -webkit-backdrop-filter: saturate(1.05) blur(6px); box-shadow: var(--shadow); transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s cubic-bezier(0.16, 1, 0.3, 1), border-color .4s ease; }
+    .card:hover{ transform: translateY(-8px) scale(1.02); border-color: rgba(255,209,0,.45); box-shadow: 0 30px 60px rgba(0,0,0,.3); z-index: 10; }
+    .card-icon{ width:56px; height:56px; background: rgba(255,209,0,.15); border-radius:12px; display:grid; place-items:center; margin-bottom:12px; color:var(--primary); font-size:22px; transition: transform 0.4s ease; }
+    .card:hover .card-icon { transform: scale(1.15) translateY(-4px); }
+
+    /* Stats */
+    .stat-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:16px; }
+    .stat-item{ text-align:center; padding:18px; transform: scale(0.95); opacity: 0; filter: blur(5px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .stat-item.visible{ transform: scale(1); opacity: 1; filter: blur(0); }
+    .stat-number{ font-size:2.5rem; font-weight:900; color:var(--primary); transition: transform 0.3s ease; }
+    .stat-item:hover .stat-number { transform: scale(1.1); }
+    .stat-label{ color:#999; font-size:.95rem; }
+
+    /* Process */
+    .process-step{ position:relative; padding:20px 20px 20px 60px; border-radius:8px; }
+    .process-step::before{ content:attr(data-step); position:absolute; left:0; top:20px; width:40px; height:40px; background:var(--primary); color:#000; border-radius:50%; display:grid; place-items:center; font-weight:900; }
+
+    /* Team */
+    .team-card{ text-align:center; }
+    .team-card .avatar{ width:100px; height:100px; border-radius:50%; background:rgba(255,159,0,.1); margin:0 auto 12px; display:grid; place-items:center; border:2px solid rgba(255,159,0,.25); color:var(--primary); font-size:40px; }
+    .team-card .name{ font-weight:700; }
+    .team-card .role{ color:#888; font-size:.85rem; }
+
+    /* FAQ */
+    .faq-item{ background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:12px; margin-bottom:12px; overflow:hidden; transition: all 0.4s ease; transform: translateZ(0); }
+    .faq-item:hover{ border-color: rgba(255,255,255,.2); background:rgba(255,255,255,.05); transform: translateY(-2px); }
+    .faq-question{ padding:18px 20px; font-weight:700; display:flex; justify-content:space-between; cursor:pointer; align-items: center; transition: color 0.3s ease; }
+    .faq-question:hover{ color:var(--primary); }
+    .faq-answer{ padding:0 20px; color:#999; height:0; overflow:hidden; transition:height .5s cubic-bezier(0.16, 1, 0.3, 1), padding .5s cubic-bezier(0.16, 1, 0.3, 1), opacity .5s ease; opacity: 0; }
+    .faq-item.active .faq-answer{ opacity: 1; padding: 16px 20px; height: auto !important; overflow: visible !important; }
+    .icon-wrapper { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.active .icon-wrapper { transform: rotate(135deg); background: var(--primary); color: #000; }
+    
+    body.light .faq-item { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #000; }
+    body.light .faq-question { color: #000; }
+    body.light .faq-answer { color: #333; }
+    body.light .card { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #000; }
+    body.light .card p { color: #444; }
+    body.light .card h3 { color: #000; }
+    body.light .stat-item { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); color: #000; }
+    body.light .stat-number { color: #d97706; }
+    body.light .stat-label { color: #555; }
+    body.light .text-white { color: #000 !important; }
+    body.light .text-white\/60 { color: #444 !important; }
+    body.light .text-gray-300 { color: #444 !important; }
+    body.light .bg-neutral-900\/80 { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); }
+    body.light .bg-neutral-900\/50 { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); }
+    body.light .bg-neutral-900 { background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1); }
+    body.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.1); }
+    body.light .bg-white\/5 { background: rgba(0, 0, 0, 0.05); }
+
+    /* Footer */
+    footer{ background:#0a0a0a; border-top:1px solid rgba(255,159,0,.15); padding:48px 16px; }
+    .footer-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:32px; max-width:1100px; margin:0 auto; }
+    .footer-col h4{ color:var(--primary); margin-bottom:12px; }
+    .footer-col a{ color:#ccc; text-decoration:none; padding:4px 0; display:block; font-size:.9rem; }
+    .footer-bottom{ text-align:center; color:#666; margin-top:28px; padding-top:12px; border-top:1px solid rgba(255,159,0,.15); }
+
+    /* Light theme overrides */
+    body.light{ --bg:#f5f5f5; --fg:#111; --bg-light:#fff; }
+    body.light header{ background:rgba(245,245,245,.95); border-bottom-color: rgba(0,0,0,0.1); }
+    body.light nav a{ color:#333; }
+    body.light nav a:hover{ color:var(--primary); }
+    body.light .card{ background:rgba(0,0,0,.03); border-color:rgba(0,0,0,.08); color: #000; }
+    body.light .faq-item{ background:rgba(0,0,0,.03); color: #000; }
+    body.light .footer-grid{ color:#333; }
+    body.light .ctrl-btn{ background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.1); color:#000; }
+    body.light .ctrl-btn:hover{ background:rgba(0,0,0,.1); border-color:var(--primary); color:var(--primary); }
+    body.light .ctrl-btn.active{ background:var(--primary); color:#000; border-color:var(--primary); }
+    body.light .hamburger{ color: #000; }
+    body.light .logo-area span{ color: #000; }
+    body.light .form-group label { color: #555 !important; }
+    body.light .form-group input, body.light .form-group textarea { background: rgba(0,0,0,.05) !important; border-color: rgba(0,0,0,.2) !important; color: #000 !important; }
+    body.light .form-group input:focus, body.light .form-group textarea:focus { border-color: var(--primary) !important; background: rgba(0,0,0,.08) !important; }
+    body.light .peer-placeholder-shown\:scale-100 { color: #666 !important; }
+    body.light .peer-focus\:text-primary { color: var(--primary) !important; }
+    body.light .peer-focus\:scale-75 { color: var(--primary) !important; }
+    body.light .faq-answer { color: #444; }
+    body.light #hero { background: #fff !important; }
+    body.light #hero .overlay { background: linear-gradient(180deg, rgba(255,255,255,.7) 0, rgba(255,255,255,.4) 50%, rgba(255,255,255,.9) 100%); }
+    body.light #hero h1, body.light #hero p { color: #111; }
+    body.light footer { background: #e0e0e0; color: #111; }
+    body.light footer .footer-col h4 { color: var(--primary); }
+    body.light footer .footer-col a { color: #444; }
+    body.light footer .footer-bottom { color: #666; }
+    body.light .bg-dark { background: #e8e8e8 !important; }
+    body.light .bg-neutral-950 { background: #e8e8e8 !important; }
+    body.light .text-white { color: #111 !important; }
+    body.light .text-white\/60 { color: #444 !important; }
+    body.light .text-gray-300 { color: #444 !important; }
+    body.light .card-icon { background: rgba(255,211,61,.2); }
+    body.light #form-success { background: rgba(255,255,255,.95); }
+    body.light #form-success h3, body.light #form-success p { color: #111 !important; }
+  </style>
+
+    <style>
+    /* Comparison Slider Styles */
+    .comparison-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; overflow: hidden; border-radius: 1rem; cursor: pointer; transition: transform 0.5s ease; }
+    .comparison-container img { width: 100%; height: auto; display: block; }
+    .comparison-container .after { position: absolute; top: 0; left: 0; width: 0%; height: 100%; overflow: hidden; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1), border-right 1.5s cubic-bezier(0.4, 0, 0.2, 1); border-right: 0px solid var(--primary); }
+    .comparison-container .after img { width: 200%; height: 100%; object-fit: cover; }
+    
+    /* Scroll Triggered State: show "After" */
+    .comparison-container.visible .after { width: 100%; border-right: 4px solid var(--primary); }
+    
+    /* Hover state: show "Before" */
+    .comparison-container:hover .after { width: 0%; border-right: 0px solid var(--primary); }
+
+    /* Fix overlay issue */
+    .comparison-container .after { z-index: 1; }
+    .comparison-container img { position: relative; z-index: 0; }
+    </style>
+</head>
+<body>
+  <script>
+    // Theme initialization (avoid flash)
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') document.body.classList.add('light');
+  </script>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <div id="preloader" aria-label="Loading..."><div class="loader"></div></div>
+  <div id="progress-bar" aria-hidden="true"></div>
+  <div class="hero-orbs" aria-hidden="true">
+    <span class="orb" style="left:10%; top:20%;"></span>
+    <span class="orb" style="left:40%; top:10%;"></span>
+    <span class="orb" style="left:70%; top:25%;"></span>
+  </div>
+  <div id="progress-bar" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-outline" id="cursor-outline"></div>
+
+    <header id="header">
+    <a href="#hero" class="logo-area" aria-label="Home">
+      <img src="assets/logo.png" alt="MOS ASPHALT" />
+      <span data-i18n="header_title">MOS ASPHALT</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#hero" data-i18n="nav_home">Գլխավոր</a>
+      <a href="#about" data-i18n="nav_about">Մեր մասին</a>
+      <a href="#services" data-i18n="nav_services">Ծառայություններ</a>
+      <a href="#process" data-i18n="nav_process">Գործընթաց</a>
+      <a href="#projects" data-i18n="nav_projects">Նախագծեր</a>
+      <a href="#contact" data-i18n="nav_contact">Կապ</a>
+    </nav>
+    <div class="controls">
+      <button id="lang-switch" class="ctrl-btn" aria-label="Language">ARM</button>
+      <button id="theme-toggle" class="ctrl-btn" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+    </div>
+  </header>
+  
+  <div class="mobile-menu" id="mobile-menu" aria-label="Mobile menu"></div>
+  
+  <main id="main-content"> 
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+      <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+        <source src="assets/mos_asphalt.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/50 via-[#0a0a0a]/30 to-[#0a0a0a] pointer-events-none"></div>
+      
+      <div class="relative z-10 container mx-auto px-4 md:px-6 flex flex-col items-center justify-center text-center max-w-5xl animate-[fadeInUp_1s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0" style="animation-delay: 0.2s">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-8">
+            <span class="flex h-2.5 w-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_10px_#ffd33d]"></span>
+            <span class="text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/90" data-i18n="hero_badge">Պրեմիում ճանապարհաշինություն</span>
+        </div>
+
+        <h1 class="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white drop-shadow-2xl mb-6 relative group">
+          <span class="absolute inset-0 blur-3xl opacity-20 bg-primary group-hover:opacity-40 transition duration-1000"></span>
+          <span class="relative z-10 text-white">
+            MOS <span class="text-[#ffa500] brightness-125">ASPHALT</span>
+          </span>
+        </h1>
+        
+        <p class="text-xl sm:text-2xl md:text-3xl text-white/70 max-w-3xl font-light leading-relaxed mb-10" data-i18n="hero_sub">
+          Ճանապարհաշինության առաջատար ընկերություն Հայաստանում
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-6 w-full sm:w-auto justify-center">
+          <a href="#contact" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold rounded-full bg-primary text-black hover:bg-primary/90 shadow-[0_0_40px_rgba(255,211,61,0.3)] hover:shadow-[0_0_60px_rgba(255,211,61,0.5)] transition-all duration-300 transform hover:-translate-y-1" data-i18n="btn_order">
+            Պատվիրել
+          </a>
+          <a href="#about" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold rounded-full bg-white/5 border border-white/10 text-white hover:bg-white/10 backdrop-blur-md transition-all duration-300 transform hover:-translate-y-1" data-i18n="btn_read">
+            Իմանալ ավելին
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-container reveal">
+        <h2 class="section-title word-reveal" data-i18n="about_title">Մեր մասին</h2>
+        <p class="section-subtitle word-reveal delay-1" data-i18n="about_subtitle">Շուրջ 15 տարվա փորձ ճանապարհաշինության ոլորտում</p>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <p class="text-gray-300 text-lg leading-relaxed blur-fade-up delay-2" data-i18n="about_text1">ՄՈՍ ԱՍֆալթ-ը Հայաստանում առաջատար ճանապարհաշինական ընկերությունն է, որն մասնագիտանում է մայրուղիների և այլ ճանապարհների կառուցմամբ, վերանորոգմամբ և ասֆալտապատմամբ: Մենք օգտագործում ենք ժամանակակից տեխնիկան և բարձրորակ նյութերը՝ յուրաքանչյուր նախագծի որակի և կայունության ապահովման համար:</p>
+          </div>
+          <div>
+            <p class="text-gray-300 text-lg leading-relaxed blur-fade-up delay-3" data-i18n="about_text2">Մեր թիմը կազմված է բարձրակարգ մասնագետներից, որոնք ապահովում են աշխատանքների կատարմանը միջազգային ստանդարտներին համապատասխանությունը: Մենք հպարտ ենք ամեն մի նախագծով և հավատարիմ ենք որակի ու հաճախորդների բավարարման կարևորության սկզբունքներին:</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats" class="py-20 relative z-20 -mt-10">
+      <div class="container mx-auto px-4 md:px-6 reveal">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div class="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 group stat-item blur-fade-up delay-1">
+            <div class="text-5xl md:text-6xl font-black text-primary mb-2 stat-number" data-target="15">0</div>
+            <div class="text-white/60 font-medium uppercase tracking-wider text-sm text-center" data-i18n="stat_years">Տարվա փորձ</div>
+          </div>
+          <div class="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 group stat-item blur-fade-up delay-2">
+            <div class="text-5xl md:text-6xl font-black text-primary mb-2 stat-number" data-target="250">0</div>
+            <div class="text-white/60 font-medium uppercase tracking-wider text-sm text-center" data-i18n="stat_projects">Ավարտված նախագծեր</div>
+          </div>
+          <div class="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 group stat-item blur-fade-up delay-3">
+            <div class="text-5xl md:text-6xl font-black text-primary mb-2 stat-number" data-target="50">0</div>
+            <div class="text-white/60 font-medium uppercase tracking-wider text-sm text-center" data-i18n="stat_team">Մասնագետներ</div>
+          </div>
+          <div class="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 group stat-item blur-fade-up delay-4">
+            <div class="text-5xl md:text-6xl font-black text-primary mb-2 stat-number" data-target="30">0</div>
+            <div class="text-white/60 font-medium uppercase tracking-wider text-sm text-center" data-i18n="stat_machines">Տեխ. սարքեր</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-24">
+      <div class="container mx-auto px-4 md:px-6 reveal">
+        <div class="mb-16">
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" data-i18n="services_title">Ծառայություններ</h2>
+          <div class="w-20 h-2 bg-primary mb-6"></div>
+          <p class="text-xl text-white/60" data-i18n="services_subtitle">Ամբողջական լուծումներ ճանապարհաշինության համար</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+            <img src="assets/card6.jpg" alt="Asphalt Paving" loading="eager" class="w-full h-56 object-cover">
+            <div class="p-6">
+              <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 text-primary text-2xl mb-4 group-hover:scale-110 transition-transform duration-500 card-icon">
+                <i class="fas fa-road"></i>
+              </div>
+              <h3 class="font-bold text-2xl text-white mb-3" data-i18n="srv_asphalt_title">Ասֆալտապատում</h3>
+              <p class="text-white/60" data-i18n="srv_asphalt_text">Բարձր որակով ասֆալտապատում ժամանակակից տեխնիկայով՝ ճանապարհների, կայանատեղիների և բակերի համար:</p>
+            </div>
+          </div>
+          
+          <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+            <img src="assets/card7.jpg" alt="Road Construction" loading="eager" class="w-full h-56 object-cover">
+            <div class="p-6">
+              <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 text-primary text-2xl mb-4 group-hover:scale-110 transition-transform duration-500 card-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <h3 class="font-bold text-2xl text-white mb-3" data-i18n="srv_construction_title">Ճանապարհների կառուցում</h3>
+              <p class="text-white/60" data-i18n="srv_construction_text">Նախագծումից մինչև հանձնում՝ ամբողջ գործընթացի կառավարում:</p>
+            </div>
+          </div>
+          
+          <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+            <img src="assets/card8.jpg" alt="Recycling" loading="eager" class="w-full h-56 object-cover">
+            <div class="p-6">
+              <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 text-primary text-2xl mb-4 group-hover:scale-110 transition-transform duration-500 card-icon">
+                <i class="fas fa-recycle"></i>
+              </div>
+              <h3 class="font-bold text-2xl text-white mb-3" data-i18n="srv_recycle_title">Վերամշակում</h3>
+              <p class="text-white/60" data-i18n="srv_recycle_text">Ասֆալտ-բետոնի վերամշակում և կրկնակի օգտագործում՝ էկոլոգիապես մաքուր մեթոդներով:</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-24 bg-neutral-950">
+      <div class="container mx-auto px-4 md:px-6 reveal">
+        <div class="mb-16 text-center">
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" data-i18n="projects_title">Նախագծեր</h2>
+          <div class="w-20 h-2 bg-primary mx-auto mb-6"></div>
+          <p class="text-xl text-white/60" data-i18n="projects_subtitle">Մեր իրականացրած կարևորագույն նախագծերը</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+            <img src="assets/card9.jpg" alt="Yerevan-Ashtarak Highway" loading="eager" class="w-full h-56 object-cover">
+            <div class="p-6">
+              <h3 class="font-bold text-2xl text-white mb-3" data-i18n="proj_1_title">Երևան-Աշտարակ մայրուղի</h3>
+              <p class="text-white/60" data-i18n="proj_1_text">25 կմ մայրուղու կապիտալ վերանորոգում և ասֆալտապատում:</p>
+            </div>
+          </div>
+          <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+            <img src="assets/card10.jpg" alt="Gyumri City Streets" loading="eager" class="w-full h-56 object-cover">
+            <div class="p-6">
+              <h3 class="font-bold text-2xl text-white mb-3" data-i18n="proj_2_title">Գյումրի քաղաքի փողոցներ</h3>
+              <p class="text-white/60" data-i18n="proj_2_text">15 փողոցի ասֆալտապատում և ենթակառուցվածքների վերականգնում:</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEFORE/AFTER -->
+    <section id="comparison" class="py-24 bg-neutral-900/50">
+        <div class="container mx-auto px-4 md:px-6 reveal">
+            <h2 class="section-title text-center mx-auto mb-4" data-i18n="comp_title">Մեր աշխատանքը՝ <span>Առաջ և Հետո</span></h2>
+            <p class="section-subtitle text-center mx-auto mb-16" data-i18n="comp_subtitle">Սահեցրեք մկնիկը նկարի վրայով՝ արդյունքը տեսնելու համար</p>
+        
+            <div class="comparison-container">
+                <img src="assets/BeforeAfter1.jpg" alt="Առաջ">
+                <div class="after"><img src="assets/BeforeAfter11.jpg" alt="Հետո"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" style="background:var(--bg-light);">
+      <div class="section-container reveal">
+        <h2 class="section-title" data-i18n="process_title">Աշխատանքի գործընթաց</h2>
+        <p class="section-subtitle" data-i18n="process_subtitle">Պարզ և արդիական մոտեցում յուրաքանչյուր նախագծի համար</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="process-step reveal delay-1" data-step="1"><h3 class="font-bold text-lg mb-2" data-i18n="process_1_title">Խորհրդատվություն</h3><p class="text-gray-600" data-i18n="process_1_text">Անվճար խորհրդատվություն և տեղանքի զննում՝ ձեր կարիքները հասկանալու նպատակով:</p></div>
+          <div class="process-step reveal delay-2" data-step="2"><h3 class="font-bold text-lg mb-2" data-i18n="process_2_title">Նախագծում և գնահատում</h3><p class="text-gray-600" data-i18n="process_2_text">Մանրամասն նախագծի մշակում և ծախսերի թափանցիկ հաշվարկ:</p></div>
+          <div class="process-step reveal delay-1" data-step="3"><h3 class="font-bold text-lg mb-2" data-i18n="process_3_title">Նախապատրաստում</h3><p class="text-gray-600" data-i18n="process_3_text">Տեղանքի նախապատրաստում, հողային աշխատանքներ և հիմքի ամրապնդում:</p></div>
+          <div class="process-step reveal delay-2" data-step="4"><h3 class="font-bold text-lg mb-2" data-i18n="process_4_title">Կատարում և հանձնում</h3><p class="text-gray-600" data-i18n="process_4_text">Աշխատանքի կատարանքի համապատասխանություն և որակի ստուգում:</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section id="team">
+      <div class="section-container reveal">
+        <h2 class="section-title" data-i18n="team_title">Մեր թիմը</h2>
+        <p class="section-subtitle" data-i18n="team_subtitle">Փորձառու մասնագետներ ձեր նախագծի համար</p>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="team-card card reveal delay-1 tilt-3d relative group overflow-hidden" style="transform-style: preserve-3d; transition: transform 0.5s ease;"><div class="glare absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10 rounded-xl" style="mix-blend-mode: overlay;"></div><div class="avatar relative z-20">Ա</div><div class="name relative z-20" data-i18n="team_1_name">Արման Այվազյան</div><div class="role relative z-20" data-i18n="team_1_role">Գլխավոր ինժեներ</div></div>
+          <div class="team-card card reveal delay-2 tilt-3d relative group overflow-hidden" style="transform-style: preserve-3d; transition: transform 0.5s ease;"><div class="glare absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10 rounded-xl" style="mix-blend-mode: overlay;"></div><div class="avatar relative z-20">Ն</div><div class="name relative z-20" data-i18n="team_2_name">Նունե Մարտիրոսյան</div><div class="role relative z-20" data-i18n="team_2_role">Նախագծերի ղեկավար</div></div>
+          <div class="team-card card reveal delay-3 tilt-3d relative group overflow-hidden" style="transform-style: preserve-3d; transition: transform 0.5s ease;"><div class="glare absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-10 rounded-xl" style="mix-blend-mode: overlay;"></div><div class="avatar relative z-20">Հ</div><div class="name relative z-20" data-i18n="team_3_name">Հակոբ Հարությունյան</div><div class="role relative z-20" data-i18n="team_3_role">Տեխնոլոգ</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE AREAS -->
+    <section id="service-areas" style="background:var(--bg-light);">
+      <div class="section-container reveal">
+        <h2 class="section-title" data-i18n="service_areas_title">Ծառայությունների տարածքներ</h2>
+        <p class="section-subtitle" data-i18n="service_areas_subtitle">Աշխատում ենք ամբողջ Հայաստանում</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card text-center reveal delay-1"><div class="font-bold" data-i18n="area_yerevan">Երևան</div></div>
+          <div class="card text-center reveal delay-2"><div class="font-bold" data-i18n="area_shirak">Շիրակ</div></div>
+          <div class="card text-center reveal delay-3"><div class="font-bold" data-i18n="area_lori">Լոռի</div></div>
+          <div class="card text-center reveal delay-1"><div class="font-bold" data-i18n="area_kotayk">Կոտայք</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPMENT -->
+    <section id="equipment">
+      <div class="section-container reveal">
+        <h2 class="section-title" data-i18n="equipment_title">Տեխնիկա</h2>
+        <p class="section-subtitle" data-i18n="equipment_subtitle">Ժամանակակից շինարարական տեխնիկա և սարքավորումներ</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+                <img src="assets/card1.png" alt="Asphalt Roller" loading="eager" class="w-full h-64 object-cover bg-neutral-800">
+                <div class="p-4">
+                    <i class="fas fa-road text-primary text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-2" data-i18n="equip_1_title">Ասֆալտատագլանիչներ</h3>
+                    <p class="text-gray-400 text-xs" data-i18n="equip_1_text">Բոմագ և HAMM գլանիչներ</p>
+                </div>
+            </div>
+            <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+                <img src="assets/card2.png" alt="Milling Machine" loading="eager" class="w-full h-64 object-cover bg-neutral-800">
+                <div class="p-4">
+                    <i class="fas fa-cog text-primary text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-2" data-i18n="equip_2_title">Ֆրեզային մեքենաներ</h3>
+                    <p class="text-gray-400 text-xs" data-i18n="equip_2_text">Wirtgen ֆրեզներ</p>
+                </div>
+            </div>
+            <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+                <img src="assets/card3.png" alt="Asphalt Plant" loading="eager" class="w-full h-64 object-cover bg-neutral-800">
+                <div class="p-4">
+                    <i class="fas fa-industry text-primary text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-2" data-i18n="equip_3_title">Ասֆալտագործարան</h3>
+                    <p class="text-gray-400 text-xs" data-i18n="equip_3_text">Ասֆալտ-բետոնի գործարան</p>
+                </div>
+            </div>
+            <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+                <img src="assets/card4.jpg" alt="Dump Truck" loading="eager" class="w-full h-64 object-cover bg-neutral-800">
+                <div class="p-4">
+                    <i class="fas fa-truck text-primary text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-2">Ինքնաթափ բեռնատարներ</h3>
+                    <p class="text-gray-400 text-xs">Բարձր բեռնատարողությամբ</p>
+                </div>
+            </div>
+            <div class="card p-0 overflow-hidden group transition-all duration-300 hover:scale-105 tilt">
+                <img src="assets/card5.jpg" alt="Road Marker" loading="eager" class="w-full h-64 object-cover bg-neutral-800">
+                <div class="p-4">
+                    <i class="fas fa-paint-roller text-primary text-2xl mb-3"></i>
+                    <h3 class="font-bold mb-2">Ճանապարհային գծանշում</h3>
+                    <p class="text-gray-400 text-xs">Գծանշման մեքենաներ</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects section removed to avoid duplication -->
+
+    <!-- FAQ -->
+    <section id="faq" class="py-24 relative bg-neutral-900/30">
+      <div class="container mx-auto px-4 md:px-6 reveal max-w-4xl">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" data-i18n="faq_title">ՀՏՀ</h2>
+          <div class="w-20 h-2 bg-primary mx-auto mb-6"></div>
+          <p class="text-xl text-white/60" data-i18n="faq_subtitle">Պատասխաններ ընդհանուր հարցերին</p>
+        </div>
+        
+        <div class="space-y-4" id="faq-accordion">
+          <div class="bg-neutral-900/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 faq-item">
+            <button class="faq-question w-full p-6 text-left font-bold text-lg text-white flex justify-between items-center focus:outline-none" aria-expanded="false" aria-controls="faq1">
+              <span data-i18n="faq_1_q">Որքա՞ն է տևում ասֆալտապատման աշխատանքը։</span>
+              <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-primary transition-transform duration-300 icon-wrapper flex-shrink-0"><i class="fas fa-plus"></i></span>
+            </button>
+            <div id="faq1" class="faq-answer px-6 text-white/60 h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0" data-i18n="faq_1_a">Աշխատանքների տևողությունը կախված է տարածքի չափից, բարդությունից և եղանակային պայմաններից։ Մենք նախապես կազմում ենք ժամանակացույց և հստակ նշում ենք յուրաքանչյուր փուլի ավարտի ժամկետները։</div>
+          </div>
+          <div class="bg-neutral-900/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 faq-item">
+            <button class="faq-question w-full p-6 text-left font-bold text-lg text-white flex justify-between items-center focus:outline-none" aria-expanded="false" aria-controls="faq2">
+              <span data-i18n="faq_2_q">Ի՞նչ երաշխիք եք տալիս։</span>
+              <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-primary transition-transform duration-300 icon-wrapper flex-shrink-0"><i class="fas fa-plus"></i></span>
+            </button>
+            <div id="faq2" class="faq-answer px-6 text-white/60 h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0" data-i18n="faq_2_a">Մենք տրամադրում ենք 3-5 տարվա գրավոր երաշխիք բոլոր կատարված աշխատանքների վրա։ Եթե երաշխիքային ժամկետում առաջանան խնդիրներ, մենք դրանք կվերացնենք անվճար և արագ։</div>
+          </div>
+          <div class="bg-neutral-900/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 faq-item">
+            <button class="faq-question w-full p-6 text-left font-bold text-lg text-white flex justify-between items-center focus:outline-none" aria-expanded="false" aria-controls="faq3">
+              <span data-i18n="faq_3_q">Ինչո՞ւ ընտրել հենց MOS ASPHALT-ը։</span>
+              <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-primary transition-transform duration-300 icon-wrapper flex-shrink-0"><i class="fas fa-plus"></i></span>
+            </button>
+            <div id="faq3" class="faq-answer px-6 text-white/60 h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0" data-i18n="faq_3_a">Մենք առաջարկում ենք բարձրակարգ սպասարկում, ժամանակակից տեխնիկա, փորձառու մասնագետներ և թափանցիկ գնագոյացում։ Մեր հիմնական նպատակն է ստեղծել դիմացկուն և որակյալ ճանապարհներ՝ հաճախորդի սպասելիքները գերազանցող արդյունքներով։</div>
+          </div>
+          <div class="bg-neutral-900/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 faq-item">
+            <button class="faq-question w-full p-6 text-left font-bold text-lg text-white flex justify-between items-center focus:outline-none" aria-expanded="false" aria-controls="faq4">
+              <span data-i18n="faq_4_q">Ինչպե՞ս կարող եմ պատվիրել ծառայությունը։</span>
+              <span class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-primary transition-transform duration-300 icon-wrapper flex-shrink-0"><i class="fas fa-plus"></i></span>
+            </button>
+            <div id="faq4" class="faq-answer px-6 text-white/60 h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0" data-i18n="faq_4_a">Պարզապես լրացրեք կայքի կոնտակտային ձևը, զանգահարեք մեզ կամ գրեք մեր էլ. փոստին։ Մեր մասնագետները կկապնվեն ձեզ հետ հնարավորինս շուտ՝ քննարկելու ձեր նախագիծը և տրամադրելու անվճար խորհրդատվություն։</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS & CLIENTS MARQUEE -->
+    <section id="certifications" class="py-16 relative overflow-hidden" style="background:var(--bg-light);">
+      <div class="section-container reveal text-center mb-8">
+        <h2 class="section-title" data-i18n="certifications_title">Վկայականներ</h2>
+      </div>
+      <div class="relative w-full overflow-hidden" style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+        <div class="flex w-max animate-marquee hover:[animation-play-state:paused] whitespace-nowrap">
+          <!-- first set -->
+        <div class="flex items-center justify-around w-full shrink-0 px-8 gap-16">
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-certificate text-primary"></i> <span data-i18n="cert_1">ISO 9001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-shield-alt text-primary"></i> <span data-i18n="cert_2">ISO 14001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-hard-hat text-primary"></i> <span>ISO 45001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-award text-primary"></i> <span>GOST R</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-medal text-primary"></i> <span>Premium Quality</span></div>
+          </div>
+          <!-- duplicate set -->
+        <div class="flex items-center justify-around w-full shrink-0 px-8 gap-16">
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-certificate text-primary"></i> <span data-i18n="cert_1">ISO 9001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-shield-alt text-primary"></i> <span data-i18n="cert_2">ISO 14001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-hard-hat text-primary"></i> <span>ISO 45001</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-award text-primary"></i> <span>GOST R</span></div>
+            <div class="flex items-center gap-3 text-lg sm:text-3xl font-bold text-gray-500/50 grayscale hover:grayscale-0 transition duration-300"><i class="fas fa-medal text-primary"></i> <span>Premium Quality</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="py-24 overflow-hidden relative" style="background:var(--bg-light);">
+      <div class="container mx-auto px-4 md:px-6 reveal text-center mb-12">
+        <h2 class="section-title" data-i18n="testimonials_title">Կարծիքներ</h2>
+        <p class="section-subtitle mx-auto" data-i18n="testimonials_subtitle">Ինչ են ասում մեր հաճախորդները</p>
+      </div>
+      
+      <div class="relative w-full" style="-webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
+        <div class="flex w-max gap-6 animate-scroll hover:[animation-play-state:paused] py-4 px-6">
+          <!-- Card 1 -->
+          <div class="card testimonial relative w-[400px] shrink-0 overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+             <i class="fas fa-quote-right absolute -bottom-4 -right-4 text-9xl opacity-5 text-primary group-hover:scale-110 transition-transform duration-500"></i>
+             <div class="flex text-primary text-sm gap-1 mb-4">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+             </div>
+             <p class="testimonial-text text-lg italic mb-6 relative z-10" data-i18n="testim_1_text">MOS ASPHALT-ի հետ համագործակցությունը միշտ եղել է բարձր մակարդակի։</p>
+             <div class="testimonial-author flex items-center gap-4 relative z-10">
+                <div class="avatar w-14 h-14 rounded-full bg-gradient-to-tr from-[#ffd33d] to-[#ff9f00] text-black flex items-center justify-center font-bold text-xl shadow-lg">Գ</div>
+                <div><strong class="block text-lg" data-i18n="testim_1_author">Գագիկ Պետրոսյան</strong><div class="text-sm text-gray-500" data-i18n="testim_1_role">Տնօրեն</div></div>
+             </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="card testimonial relative w-[400px] shrink-0 overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+             <i class="fas fa-quote-right absolute -bottom-4 -right-4 text-9xl opacity-5 text-primary group-hover:scale-110 transition-transform duration-500"></i>
+             <div class="flex text-primary text-sm gap-1 mb-4">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+             </div>
+             <p class="testimonial-text text-lg italic mb-6 relative z-10" data-i18n="testim_2_text">Ասֆալտապատումը արագ և պրոֆեսիոնալ էր։</p>
+             <div class="testimonial-author flex items-center gap-4 relative z-10">
+                <div class="avatar w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 text-white flex items-center justify-center font-bold text-xl shadow-lg">Ս</div>
+                <div><strong class="block text-lg" data-i18n="testim_2_author">Սուրեն Գրիգորյան</strong><div class="text-sm text-gray-500" data-i18n="testim_2_role">CEO</div></div>
+             </div>
+          </div>
+          <!-- Card 1 (Duplicate) -->
+          <div class="card testimonial relative w-[400px] shrink-0 overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+             <i class="fas fa-quote-right absolute -bottom-4 -right-4 text-9xl opacity-5 text-primary group-hover:scale-110 transition-transform duration-500"></i>
+             <div class="flex text-primary text-sm gap-1 mb-4">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+             </div>
+             <p class="testimonial-text text-lg italic mb-6 relative z-10" data-i18n="testim_1_text">MOS ASPHALT-ի հետ համագործակցությունը միշտ եղել է բարձր մակարդակի։</p>
+             <div class="testimonial-author flex items-center gap-4 relative z-10">
+                <div class="avatar w-14 h-14 rounded-full bg-gradient-to-tr from-[#ffd33d] to-[#ff9f00] text-black flex items-center justify-center font-bold text-xl shadow-lg">Գ</div>
+                <div><strong class="block text-lg" data-i18n="testim_1_author">Գագիկ Պետրոսյան</strong><div class="text-sm text-gray-500" data-i18n="testim_1_role">Տնօրեն</div></div>
+             </div>
+          </div>
+          <!-- Card 2 (Duplicate) -->
+          <div class="card testimonial relative w-[400px] shrink-0 overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+             <i class="fas fa-quote-right absolute -bottom-4 -right-4 text-9xl opacity-5 text-primary group-hover:scale-110 transition-transform duration-500"></i>
+             <div class="flex text-primary text-sm gap-1 mb-4">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+             </div>
+             <p class="testimonial-text text-lg italic mb-6 relative z-10" data-i18n="testim_2_text">Ասֆալտապատումը արագ և պրոֆեսիոնալ էր։</p>
+             <div class="testimonial-author flex items-center gap-4 relative z-10">
+                <div class="avatar w-14 h-14 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 text-white flex items-center justify-center font-bold text-xl shadow-lg">Ս</div>
+                <div><strong class="block text-lg" data-i18n="testim_2_author">Սուրեն Գրիգորյան</strong><div class="text-sm text-gray-500" data-i18n="testim_2_role">CEO</div></div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24">
+      <div class="container mx-auto px-4 md:px-6 reveal max-w-6xl">
+        <div class="mb-16">
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-4 uppercase tracking-tight" data-i18n="contact_title">Կապ</h2>
+          <div class="w-20 h-2 bg-primary mb-6"></div>
+          <p class="text-xl text-white/60" data-i18n="contact_subtitle">Կապ հաստատեք մեզ հետ ցանկացած հարցով</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-12 md:gap-24">
+          <!-- Info part -->
+          <div class="space-y-8">
+            <div class="flex items-start gap-6 group">
+              <div class="w-16 h-16 rounded-2xl bg-neutral-900 border border-white/10 flex items-center justify-center text-primary text-2xl group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300 shadow-xl">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white mb-1" data-i18n="contact_addr_title">Հասցե</h4>
+                <p class="text-white/60 text-lg" data-i18n="contact_addr_val">ք. Երևան, Արշակունյաց 12</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-6 group">
+              <div class="w-16 h-16 rounded-2xl bg-neutral-900 border border-white/10 flex items-center justify-center text-primary text-2xl group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300 shadow-xl">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white mb-1" data-i18n="contact_phone_title">Հեռախոս</h4>
+                <p class="text-white/60 text-lg" data-i18n="contact_phone_val">+374 10 123 456</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-6 group">
+              <div class="w-16 h-16 rounded-2xl bg-neutral-900 border border-white/10 flex items-center justify-center text-primary text-2xl group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300 shadow-xl">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white mb-1" data-i18n="contact_email_title">Email</h4>
+                <p class="text-white/60 text-lg" data-i18n="contact_email_val">info@mosasphalt.am</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-6 group">
+              <div class="w-16 h-16 rounded-2xl bg-neutral-900 border border-white/10 flex items-center justify-center text-primary text-2xl group-hover:scale-110 group-hover:border-primary/50 transition-all duration-300 shadow-xl">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-white mb-1" data-i18n="contact_hours_title">Աշխատանքային ժամեր</h4>
+                <p class="text-white/60 text-lg" data-i18n="contact_hours_val">Երկ-Ուրբ 09:00-18:00</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Form part -->
+          <div class="bg-neutral-900/80 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl relative">
+            <form id="contact-form" class="space-y-6">
+              <div class="relative z-0 w-full mb-6 group">
+                  <input type="text" name="name" id="floating_name" class="block py-3.5 px-0 w-full text-lg text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                  <label for="floating_name" class="peer-focus:font-medium absolute text-white/50 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 text-lg" data-i18n="form_name_label">Անուն</label>
+                  <p class="text-red-500 text-xs mt-1 hidden error-msg" id="error-name">Լրացնել անունը</p>
+              </div>
+              <div class="relative z-0 w-full mb-6 group">
+                  <input type="email" name="email" id="floating_email" class="block py-3.5 px-0 w-full text-lg text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                  <label for="floating_email" class="peer-focus:font-medium absolute text-white/50 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 text-lg" data-i18n="form_email_label">Էլ. փոստ</label>
+                  <p class="text-red-500 text-xs mt-1 hidden error-msg" id="error-email">Նշեք վավեր էլ. փոստ</p>
+              </div>
+              <div class="relative z-0 w-full mb-6 group">
+                  <input type="tel" name="phone" id="floating_phone" class="block py-3.5 px-0 w-full text-lg text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " pattern="[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}" />
+                  <label for="floating_phone" class="peer-focus:font-medium absolute text-white/50 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 text-lg" data-i18n="form_phone_label">Հեռախոս</label>
+                  <p class="text-red-500 text-xs mt-1 hidden error-msg" id="error-phone">Նշեք վավեր հեռախոս (օր. +374 10 123 456)</p>
+              </div>
+              <div class="relative z-0 w-full mb-8 group">
+                  <textarea name="message" id="floating_message" rows="4" class="block py-3.5 px-0 w-full text-lg text-white bg-transparent border-0 border-b-2 border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer resize-none" placeholder=" " required></textarea>
+                  <label for="floating_message" class="peer-focus:font-medium absolute text-white/50 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-primary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 text-lg" data-i18n="form_msg_label">Հաղորդագրություն</label>
+                  <p class="text-red-500 text-xs mt-1 hidden error-msg" id="error-message">Լրացնել հաղորդագրությունը</p>
+              </div>
+              <button type="submit" id="submit-btn" class="w-full text-black bg-primary hover:bg-primary/90 focus:ring-4 focus:outline-none focus:ring-primary/50 font-bold rounded-2xl text-lg px-5 py-4 text-center transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(255,211,61,0.2)]">
+                <span data-i18n="form_btn"><i class="fas fa-paper-plane mr-2"></i> Ուղարկել</span>
+              </button>
+            </form>
+            <script>
+              function validateForm() {
+                let isValid = true;
+                const name = document.getElementById('floating_name');
+                const email = document.getElementById('floating_email');
+                const phone = document.getElementById('floating_phone');
+                const message = document.getElementById('floating_message');
+                
+                // Reset errors
+                document.querySelectorAll('.error-msg').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('input, textarea').forEach(el => el.classList.remove('border-red-500'));
+                
+                // Name validation
+                if (!name.value.trim()) {
+                  document.getElementById('error-name').classList.remove('hidden');
+                  name.classList.add('border-red-500');
+                  isValid = false;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email.value.trim() || !emailRegex.test(email.value)) {
+                  document.getElementById('error-email').classList.remove('hidden');
+                  email.classList.add('border-red-500');
+                  isValid = false;
+                }
+                
+                // Phone validation (optional but must be valid if provided)
+                if (phone.value.trim()) {
+                  const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}[-\s\.]?[0-9]{2}$/;
+                  if (!phoneRegex.test(phone.value.replace(/\s/g, ''))) {
+                    document.getElementById('error-phone').classList.remove('hidden');
+                    phone.classList.add('border-red-500');
+                    isValid = false;
+                  }
+                }
+                
+                // Message validation
+                if (!message.value.trim()) {
+                  document.getElementById('error-message').classList.remove('hidden');
+                  message.classList.add('border-red-500');
+                  isValid = false;
+                }
+                
+                return isValid;
+              }
+              
+              document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateForm()) return;
+                
+                const btn = document.getElementById('submit-btn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Ուղարկվում է...';
+                
+                fetch('https://formspree.io/f/mreowyrk', {
+                  method: 'POST',
+                  body: new FormData(this),
+                  headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                  if (response.ok) {
+                    document.getElementById('contact-form').classList.add('hidden');
+                    document.getElementById('form-success').classList.remove('hidden');
+                  } else {
+                    alert('Error sending message. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = '<span data-i18n="form_btn"><i class="fas fa-paper-plane mr-2"></i> Ուղարկել</span>';
+                  }
+                });
+              });
+              
+              // Clear errors on input
+              document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => {
+                el.addEventListener('input', function() {
+                  this.classList.remove('border-red-500');
+                  const errorMsg = this.parentElement.querySelector('.error-msg');
+                  if (errorMsg) errorMsg.classList.add('hidden');
+                });
+              });
+            </script>
+            <div id="form-success" class="hidden absolute inset-0 bg-neutral-900 rounded-[2rem] flex flex-col items-center justify-center p-8 text-center backdrop-blur-xl border border-primary/20">
+              <i class="fas fa-check-circle text-6xl text-primary mb-6 animate-bounce"></i>
+              <h3 class="text-3xl font-black text-white mb-2" data-i18n="form_success_title">Շնորհակալություն!</h3>
+              <p class="text-white/70 text-lg" data-i18n="form_success_msg">Ձեր հայտը հաջողությամբ ուղարկվել է, մենք կկապվենք ձեզ հետ մոտ ժամանակներս:</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <img src="assets/logo.png" alt="MOS ASPHALT" class="h-10 mb-4" />
+        <h4 data-i18n="header_title">MOS ASPHALT</h4>
+        <p class="text-gray-500 text-sm" data-i18n="footer_desc">Ճանապարհաշինության առաջատար ընկերություն Հայաստանում։ Բարձր որակ, ժամանակակից տեխնիկա, փորձառու թիմ։</p>
+      </div>
+      <div class="footer-col"><h4 data-i18n="footer_links">Հղումներ</h4><a href="#about" data-i18n="nav_about">Մեր մասին</a><a href="#services" data-i18n="nav_services">Ծառայություններ</a><a href="#projects" data-i18n="nav_projects">Նախագծեր</a><a href="#contact" data-i18n="nav_contact">Կապ</a></div>
+      <div class="footer-col"><h4 data-i18n="footer_services">Ծառայություններ</h4><a href="#services" data-i18n="footer_asphalt">Ասֆալտապատում</a><a href="#services" data-i18n="footer_const">Ճանապարհների կառուցում</a><a href="#services" data-i18n="footer_rent">Տեխնիկայի վարձակալություն</a></div>
+      <div class="footer-col"><h4 data-i18n="footer_contact">Կապ</h4><a href="tel:+37410123456">+374 10 123 456</a><a href="mailto:info@mosasphalt.am">info@mosasphalt.am</a></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 MOS ASPHALT. <span data-i18n="footer_rights">Բոլոր իրավունքները պաշտպանված են։</span></div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="toTop" aria-label="Back to top" style="position:fixed; bottom:24px; right:24px; display:none; z-index:99999; background:rgba(255,209,0,.9); color:#000; border:none; border-radius:12px; width:48px; height:48px; cursor:pointer; align-items: center; justify-content: center; backdrop-filter: blur(4px); box-shadow: 0 4px 16px rgba(0,0,0,.3); transition: all .3s ease;"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => document.getElementById('preloader').classList.add('hidden'), 400);
+    });
+    // Consolidated i18n mechanism (single source of truth)
+    const translations = {
+      hy: { 
+        nav_home: 'Գլխավոր', 
+        nav_about: 'Մեր մասին', 
+        nav_services: 'Ծառայություններ', 
+        nav_process: 'Գործընթաց', 
+        nav_projects: 'Նախագծեր', 
+        nav_contact: 'Կապ', 
+        hero_title: 'MOS <span class="accent">ASPHALT</span>', 
+        hero_sub: 'Հայաստանի ճանապարհաշինություն', 
+        btn_order: 'Պատվիրել', 
+        btn_read: 'Իմանալ ավելի', 
+        about_title: 'Մեր մասին', 
+        about_subtitle: 'Շուրջ 15 տարվա փորձ', 
+        stat_years: 'Տարվա փորձ', 
+        stat_projects: 'Ավարտված նախագծեր', 
+        stat_team: 'Մասնագետներ', 
+        stat_machines: 'Տեխ. սարքեր', 
+        services_title: 'Ծառայություններ', 
+        services_subtitle: 'Ամբողջական լուծումներ ճանապարհաշինության համար', 
+        process_title: 'Աշխատանքի գործընթաց', 
+        process_subtitle: 'Պարզ և արդիական մոտեցում', 
+        team_title: 'Մեր թիմը', 
+        projects_title: 'Նախագծեր', 
+        faq_title: 'ՀՏՀ', 
+        faq_subtitle: 'Պատասխաններ ընդհանուր հարցերին', 
+        faq_1_q: 'Որքա՞ն է տևում ասֆալտապատման աշխատանքը։', 
+        faq_1_a: 'Աշխատանքների տևողությունը կախված է տարածքի չափից և բարդությունից։', 
+        faq_2_q: 'Ի՞նչ երաշխիք եք տալիս։', 
+        faq_2_a: 'Մենք տրամադրում ենք 3-5 տարվա երաշխիք կատարված աշխատանքների վրա։', 
+        certifications_title: 'Վկայականներ', 
+        testim_1_text: 'MOS ASPHALT-ի հետ համագործակցությունը միշտ եղել է բարձր մակարդակի։', 
+        testim_1_author: 'Գագիկ Պետրոսյան', 
+        testim_1_role: 'Տնօրեն', 
+        testim_2_text: 'Ասֆալտապատումը արագ և պրոֆեսիոնալ էր։', 
+        testim_2_author: 'Սուրեն Գրիգորյան', 
+        testim_2_role: 'CEO', 
+        clients_title: 'Հաճախորդներ', 
+        service_areas_title: 'Ծառայությունների տարածքներ', 
+        equipment_title: 'Տեխնիկա', 
+        equipment_subtitle: 'Ժամանակակից շինարարական տեխնիկա', 
+        contact_title: 'Կապ', 
+        contact_subtitle: 'Կապ հաստատեք մեզ հետ', 
+        lang_label: 'ARM', 
+        header_title: 'MOS ASPHALT', 
+        cert_1: 'ISO 9001', 
+        cert_2: 'ISO 14001', 
+        contact_addr_title: 'Հասցե', 
+        contact_addr_val: 'ք. Երևան, Արշակունյաց 12', 
+        contact_phone_title: 'Հեռախոս', 
+        contact_phone_val: '+374 10 123 456', 
+        contact_email_title: 'Email', 
+        contact_email_val: 'info@mosasphalt.am', 
+        contact_hours_title: 'Աշխատանքային ժամեր', 
+        contact_hours_val: 'Երկ-Ուրբ 09:00-18:00', 
+        form_name_label: 'Անուն', 
+        form_email_label: 'Էլ. փոստ', 
+        form_phone_label: 'Հեռախոս', 
+        form_msg_label: 'Հաղորդագրություն', 
+        form_btn: 'Ուղարկել', 
+        footer_desc: 'Ճանապարհաշինության առաջատար ընկերություն Հայաստանում։ Բարձր որակ, ժամանակակից տեխնիկա, փորձառու թիմ։', 
+        footer_links: 'Հղումներ', 
+        footer_services: 'Ծառայություններ', 
+        footer_contact: 'Կապ', 
+        footer_rights: 'Բոլոր իրավունքները պաշտպանված են։' 
+      },
+      en: { nav_home:'Home', nav_about:'About', nav_services:'Services', nav_process:'Process', nav_projects:'Projects', nav_contact:'Contact', hero_title:'MOS <span class="accent">ASPHALT</span>', hero_sub:'Leading road construction in Armenia', btn_order:'Order Now', btn_read:'Learn More', about_title:'About Us', about_subtitle:'Over 15 years of road construction experience', stat_years:'Years of Experience', stat_projects:'Completed Projects', stat_team:'Professionals', stat_machines:'Equipment', services_title:'Services', services_subtitle:'Complete solutions for road construction', process_title:'Our Process', process_subtitle:'A simple and efficient approach to every project', team_title:'Our Team', projects_title:'Projects', faq_title:'FAQ', faq_subtitle:'Answers to common questions', faq_1_q:'How long does the asphalting work take?', faq_1_a:'The duration of the work depends on the size and complexity of the area.', faq_2_q:'What kind of warranty do you provide?', faq_2_a:'We provide a 3-5 year warranty on the work performed.', certifications_title:'Certifications', testimonials_title:'Testimonials', testim_1_text:'Collaboration with MOS ASPHALT has always been at a high level.', testim_1_author:'Gagik Petrosyan', testim_1_role:'Director', testim_2_text:'Asphalting was fast and professional.', testim_2_author:'Suren Grigoryan', testim_2_role:'CEO', clients_title:'Clients', service_areas_title:'Service Areas', equipment_title:'Equipment', equipment_subtitle:'Modern construction machinery and equipment', contact_title:'Contact', contact_subtitle:'Get in touch', lang_label:'ENG', header_title:'MOS ASPHALT', cert_1:'ISO 9001', cert_2:'ISO 14001', contact_addr_title:'Address', contact_addr_val:'Yerevan, Arshakunyats 12', contact_phone_title:'Phone', contact_phone_val:'+374 10 123 456', contact_email_title:'Email', contact_email_val:'info@mosasphalt.am', contact_hours_title:'Working Hours', contact_hours_val:'Mon-Fri 09:00-18:00', form_name_label:'Name', form_email_label:'Email', form_phone_label:'Phone', form_msg_label:'Message', form_btn:'Send', footer_desc:'Leading road construction company in Armenia. High quality, modern equipment, experienced team.', footer_links:'Links', footer_services:'Services', footer_contact:'Contact', footer_rights:'All rights reserved.' }
+    };
+    let currentLang = localStorage.getItem('lang') || 'hy';
+    function loadLang(lang){
+      const dict = translations[lang] || translations.hy;
+      Object.entries(dict).forEach(([key, value]) => {
+        const els = document.querySelectorAll('[data-i18n="' + key + '"]');
+        els.forEach(el => {
+            if (/<[a-z]/i.test(String(value))){ el.innerHTML = value; } else { el.textContent = value; }
+        });
+      });
+      if (document.getElementById('lang-switch')){ document.getElementById('lang-switch').textContent = (lang==='hy')?'ARM':'ENG'; }
+    }
+    loadLang(currentLang);
+    const langSwitch = document.getElementById('lang-switch');
+    if (langSwitch){ langSwitch.addEventListener('click', ()=>{ currentLang = (currentLang==='hy')?'en':'hy'; localStorage.setItem('lang', currentLang); loadLang(currentLang); }); }
+
+    // Custom cursor
+    const dot = document.getElementById('cursor-dot');
+    const outline = document.getElementById('cursor-outline');
+    let mx=0,my=0,ox=0,oy=0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx+'px'; dot.style.top = my+'px'; });
+    function loop(){ ox += (mx-ox)*.15; oy += (my-oy)*.15; outline.style.left = ox+'px'; outline.style.top = oy+'px'; requestAnimationFrame(loop); }
+    loop();
+    document.querySelectorAll('a, button, .faq-question, input, textarea').forEach(el => {
+      el.addEventListener('mouseenter', ()=>{ dot.classList.add('hover'); outline.classList.add('hover'); });
+      el.addEventListener('mouseleave', ()=>{ dot.classList.remove('hover'); outline.classList.remove('hover'); });
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    const isLight = localStorage.getItem('theme') === 'light';
+    if (isLight) document.body.classList.add('light');
+    
+    function updateThemeIcon() {
+        const isLightTheme = document.body.classList.contains('light');
+        if (isLightTheme) {
+            themeBtn.innerHTML = '<i class="fas fa-moon" style="color: #000;"></i>';
+        } else {
+            themeBtn.innerHTML = '<i class="fas fa-sun" style="color: #fff;"></i>';
+        }
+    }
+    updateThemeIcon();
+    
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+        updateThemeIcon();
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const items = ['#hero','#about','#services','#process','#projects','#contact'];
+    const labels = ['Գլխավոր','Մեր մասին','Ծառայություններ','Գործընթաց','Նախագծեր','Կապ'];
+    
+    function populateMobileMenu() {
+        mobileMenu.innerHTML = '';
+        items.forEach((it, idx) => {
+            const a = document.createElement('a');
+            a.href = it;
+            a.textContent = labels[idx];
+            // Re-apply localization on mobile menu items
+            a.setAttribute('data-i18n', getI18nKey(labels[idx]));
+            a.addEventListener('click', ()=>{ mobileMenu.classList.remove('open'); hamburger.innerHTML = '<i class="fas fa-bars"></i>'; });
+            mobileMenu.appendChild(a);
+        });
+        loadLang(currentLang);
+    }
+    function getI18nKey(label) {
+        const keys = { 'Գլխավոր':'nav_home', 'Մեր մասին':'nav_about', 'Ծառայություններ':'nav_services', 'Գործընթաց':'nav_process', 'Նախագծեր':'nav_projects', 'Կապ':'nav_contact' };
+        return keys[label];
+    }
+    populateMobileMenu();
+    hamburger.addEventListener('click', ()=>{ mobileMenu.classList.toggle('open'); hamburger.innerHTML = mobileMenu.classList.contains('open') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; });
+    
+    // Scroll reveal and active nav highlighting
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+    const reveals = document.querySelectorAll('.reveal');
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0
+    };
+
+    // Word reveal and blur-fade-up functionality
+    const blurElements = document.querySelectorAll('.blur-fade-up');
+    const wordReveals = document.querySelectorAll('.word-reveal');
+    
+    // Helper to wrap text content into spans for word reveal
+    wordReveals.forEach(el => {
+      // Avoid destroying i18n logic: we do this inside loadLang ideally, 
+      // but doing it here assumes initial render. For i18n compatibility, 
+      // we just add the visible class to the parent when intersecting, 
+      // and CSS handles the rest without breaking data-i18n.
+      // Wait, to make it work with data-i18n we just fade the whole element in gracefully.
+      el.classList.add('blur-fade-up'); 
+    });
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    
+    blurElements.forEach(el => scrollObserver.observe(el));
+    wordReveals.forEach(el => scrollObserver.observe(el));
+
+    const sectionHighlightObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Reveal animation for section containers
+                entry.target.classList.add('visible');
+                
+                // Active nav highlighting
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => sectionHighlightObserver.observe(section));
+    reveals.forEach(r => sectionHighlightObserver.observe(r));
+
+    // Counter animations for stats section with spring effect
+    const statCounters = document.querySelectorAll('.stat-number[data-target]');
+    if (statCounters.length) {
+      const showCounters = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Trigger blur-fade-up for the container
+            entry.target.closest('.stat-item').classList.add('visible');
+
+            if (!entry.target.dataset.animated) {
+              entry.target.dataset.animated = 'true';
+              const el = entry.target; 
+              const target = +el.dataset.target; 
+              const duration = 2000; // Increased duration for premium feel
+              const start = 0; 
+              const startTs = performance.now();
+              
+              // Easing function (easeOutExpo)
+              const easeOutExpo = (t) => { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); };
+
+              const step = (ts) => { 
+                  let p = Math.min((ts - startTs) / duration, 1); 
+                  p = easeOutExpo(p);
+                  el.textContent = Math.floor(start + (target - start) * p); 
+                  if (p < 1) requestAnimationFrame(step); 
+                  else el.textContent = target + '+'; 
+              };
+              requestAnimationFrame(step);
+            }
+          }
+        }); 
+      }, { threshold: 0.2 }); 
+      statCounters.forEach(c => showCounters.observe(c));
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        const item = button.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        
+        document.querySelectorAll('.faq-question').forEach(b => b.setAttribute('aria-expanded', 'false'));
+        document.querySelectorAll('.faq-item').forEach(it => it.classList.remove('active'));
+        document.querySelectorAll('.faq-answer').forEach(a => {
+            a.style.height = '0';
+            a.style.opacity = '0';
+        });
+        
+        if (!expanded) {
+          button.setAttribute('aria-expanded', 'true');
+          item.classList.add('active');
+          answer.style.height = answer.scrollHeight + "px";
+          answer.style.opacity = '1';
+        } else {
+          // If already expanded, just collapse
+          button.setAttribute('aria-expanded', 'false');
+          item.classList.remove('active');
+          answer.style.height = '0';
+          answer.style.opacity = '0';
+        }
+      });
+    });
+
+    // Scroll progress bar
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgress(){ const s = window.scrollY; const h = document.documentElement.scrollHeight - window.innerHeight; const p = h > 0 ? (s / h) * 100 : 0; progressBar.style.width = p + '%'; }
+    window.addEventListener('scroll', updateProgress); window.addEventListener('resize', updateProgress); updateProgress();
+
+    // Back to top button visibility
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => { if (window.scrollY > 400) toTop.style.display = 'flex'; else toTop.style.display = 'none'; });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Tilt effect for service cards
+    document.querySelectorAll('.tilt').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left; const y = e.clientY - r.top;
+        const rx = ((y / r.height) - 0.5) * -8;
+        const ry = ((x / r.width) - 0.5) * 8;
+        card.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+
+    // Observer for comparison slider
+    const compObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.comparison-container').forEach(c => compObserver.observe(c));
+
+    // Apple-Style 3D Hover effect for Team cards
+    document.querySelectorAll('.tilt-3d').forEach(card => {
+      const glare = card.querySelector('.glare');
+      card.addEventListener('mouseenter', () => { card.style.transition = 'transform 0.1s ease-out'; });
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left; const y = e.clientY - r.top;
+        const rx = ((y / r.height) - 0.5) * -15; // Max tilt
+        const ry = ((x / r.width) - 0.5) * 15;
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.02, 1.02, 1.02)`;
+        if(glare) {
+          glare.style.opacity = '1';
+          glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, transparent 60%)`;
+        }
+      });
+      card.addEventListener('mouseleave', () => { 
+        card.style.transition = 'transform 0.5s ease';
+        card.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        if(glare) glare.style.opacity = '0';
+      });
+    });
+
+    // Hero parallax on scroll
+    const heroContent = document.querySelector('#hero .content');
+    const heroVideo = document.querySelector('#hero video');
+    if (heroContent){ window.addEventListener('scroll', () => {
+      const s = window.scrollY;
+      heroContent.style.transform = 'translateY(' + (s * 0.12) + 'px)';
+      if (heroVideo){ heroVideo.style.transform = 'scale(' + (1 + s * 0.0006) + ')'; }
+    }); }
+  </script>
+  
+  
+</body>
+</html>
