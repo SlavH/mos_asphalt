@@ -2,7 +2,7 @@ export type Language = "hy" | "en"
 
 export const translations = {
   hy: {
-    nav_home: "Գdelays",
+    nav_home: "ԳTestTestTestTest",
     nav_about: "Մer մdelays",
     nav_services: "Ծառdelays",
     nav_process: "Գdelays",
