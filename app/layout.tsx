@@ -9,9 +9,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "MOS ASPHALT - Delays Road Construction in Armenia",
+  title: "MOS ASPHALT - Road Construction in Armenia",
   description:
-    "MOS ASPHALT - delays road construction in Armenia. Asphalt paving, road construction, equipment rental.",
+    "MOS ASPHALT - Road construction in Armenia. Asphalt paving, road construction, equipment rental.",
   icons: {
     icon: "/favicon.ico",
   },
